@@ -1,0 +1,7 @@
+{
+  "apiVersion": "v1beta2",
+  "kind": "Secret",
+  "id": "token-system-dns",
+  "data": {
+  }
+}
