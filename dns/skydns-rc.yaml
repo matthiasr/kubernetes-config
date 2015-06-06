@@ -1,21 +1,21 @@
 apiVersion: v1beta3
 kind: ReplicationController
 metadata:
-  name: kube-dns-v1
+  name: kube-dns-v3
   namespace: default
   labels:
-    k8s-app: kube-dns-v1
+    k8s-app: kube-dns-v3
     kubernetes.io/cluster-service: "true"
 spec:
   replicas: 2
   selector:
     k8s-app: kube-dns
-    version: v1
+    version: v3
   template:
     metadata:
       labels:
         k8s-app: kube-dns
-        version: v1
+        version: v3
         kubernetes.io/cluster-service: "true"
     spec:
       containers:
@@ -30,7 +30,7 @@ spec:
         - -initial-cluster-token
         - skydns-etcd
       - name: kube2sky
-        image: gcr.io/google_containers/kube2sky:1.7
+        image: gcr.io/google_containers/kube2sky:1.9
         args:
         # command = "/kube2sky"
         - -domain=k.2pktfkt.net
@@ -40,7 +40,7 @@ spec:
         # command = "/skydns"
         - -machines=http://localhost:4001
         - -addr=0.0.0.0:53
-        - -domain=k.2pktfkt.net.
+        - -domain={{ pillar['dns_domain'] }}.
         ports:
         - containerPort: 53
           name: dns
