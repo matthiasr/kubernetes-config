@@ -10,7 +10,7 @@ metadata:
 spec:
   selector:
     k8s-app: kube-dns
-  portalIP:  {{ pillar['dns_server'] }}
+  portalIP:  10.0.0.10
   ports:
   - name: dns
     port: 53
