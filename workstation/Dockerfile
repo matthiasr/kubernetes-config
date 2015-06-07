@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt-get update && apt-get install -y ssh zsh vim
+RUN apt-get update && apt-get install -y ssh zsh vim dnsutils curl build-essential
 COPY sshd_config /etc/ssh/sshd_config
 RUN rm /etc/ssh/ssh_host_*
 COPY prepare.sh /etc/ssh/prepare.sh
