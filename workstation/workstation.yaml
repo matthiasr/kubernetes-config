@@ -1,10 +1,10 @@
 apiVersion: v1beta3
 kind: ReplicationController
 metadata:
-  name: workstation-v1
+  name: workstation-v2
   labels: &labels
     app: workstation
-    version: v1
+    version: v2
 spec:
   replicas: 1
   selector:
@@ -16,13 +16,13 @@ spec:
         <<: *labels
     spec:
       containers:
-        - image: workstation:v1
+        - image: workstation:v2
           name: workstation
           volumeMounts:
           - mountPath: /home/mr
             name: home
-          - mountPath: /etc/dropbear
-            name: dropbear-keys
+          - mountPath: /etc/ssh/keys
+            name: openssh-keys
           ports:
             - containerPort: 22
           livenessProbe:
@@ -32,6 +32,6 @@ spec:
         - name: home
           hostPath: 
             path: /home/mr
-        - name: dropbear-keys
+        - name: openssh-keys
           secret:
-            secretName: workstation-ssh-host-keys
+            secretName: workstation-openssh-host-keys
