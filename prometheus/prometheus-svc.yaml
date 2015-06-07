@@ -1,0 +1,12 @@
+apiVersion: v1beta3
+kind: Service
+metadata:
+  name: prometheus
+spec:
+  selector:
+    app: prometheus
+  ports:
+  - name: http
+    port: 80
+    targetPort: 9090
+    protocol: TCP

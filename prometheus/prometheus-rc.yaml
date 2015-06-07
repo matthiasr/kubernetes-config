@@ -1,0 +1,31 @@
+apiVersion: v1beta3
+kind: ReplicationController
+metadata:
+  name: prometheus-v1
+  labels: &labels
+    app: prometheus
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      containers:
+        - name: prometheus
+          image: matthiasr/prometheus
+          volumeMount:
+            name: prometheus-storage
+            mountPath: /prometheus
+          ports:
+            - containerPort: 9090
+          livenessProbe:
+            httpGet:
+              port: 9090
+      volumes:
+        - name: prometheus-storage
+          hostPath:
+            path: /srv/kubernetes/data/prometheus
