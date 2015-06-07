@@ -17,8 +17,8 @@ spec:
       containers:
         - name: prometheus
           image: matthiasr/prometheus
-          volumeMount:
-            name: prometheus-storage
+          volumeMounts:
+          - name: prometheus-storage
             mountPath: /prometheus
           ports:
             - containerPort: 9090
