@@ -16,7 +16,7 @@ spec:
         <<: *labels
     spec:
       containers:
-        - image: workstation
+        - image: workstation:v1
           name: workstation
           volumeMounts:
           - mountPath: /home/mr
