@@ -2,10 +2,9 @@ apiVersion: v1beta3
 kind: Service
 metadata:
   name: workstation
-  namespace: default
 spec:
   selector:
-    run: workstation
+    app: workstation
   ports:
   - name: ssh
     port: 22

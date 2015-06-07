@@ -1,18 +1,19 @@
 apiVersion: v1beta3
 kind: ReplicationController
 metadata:
-  labels:
-    run: workstation
-  name: workstation
+  name: workstation-v1
+  labels: &labels
+    app: workstation
+    version: v1
 spec:
   replicas: 1
   selector:
-    run: workstation
+    <<: *labels
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: workstation
+        <<: *labels
     spec:
       containers:
         - image: workstation
@@ -23,7 +24,10 @@ spec:
           - mountPath: /etc/dropbear
             name: dropbear-keys
           ports:
-            - containerPort: 3306
+            - containerPort: 22
+          livenessProbe:
+            tcpSocket:
+              port: 22
       volumes:
         - name: home
           hostPath: 
