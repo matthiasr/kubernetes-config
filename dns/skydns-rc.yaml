@@ -33,14 +33,20 @@ spec:
         image: gcr.io/google_containers/kube2sky:1.9
         args:
         # command = "/kube2sky"
-        - -domain=k.2pktfkt.net
+        - -domain=k.2pktfkt.net.
+        - -kubecfg_file=/etc/dns_token/kubeconfig
+        - -kube_master_url=https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
+        volumeMounts:
+        - mountPath: /etc/dns_token
+          name: dns-token
+          readOnly: true
       - name: skydns
         image: gcr.io/google_containers/skydns:2015-03-11-001
         args:
         # command = "/skydns"
         - -machines=http://localhost:4001
         - -addr=0.0.0.0:53
-        - -domain={{ pillar['dns_domain'] }}.
+        - -domain=k.2pktfkt.net.
         ports:
         - containerPort: 53
           name: dns
@@ -57,3 +63,7 @@ spec:
           initialDelaySeconds: 30
           timeoutSeconds: 5
       dnsPolicy: Default  # Don't use cluster DNS.
+      volumes:
+      - name: dns-token
+        secret:
+          secretName: token-system-dns
