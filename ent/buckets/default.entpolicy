@@ -1,0 +1,9 @@
+{
+  "name": "default",
+  "owner": {
+      "email": {
+          "address": "default@nobody",
+          "name": "catch-all bucket owner"
+      }
+  }
+}

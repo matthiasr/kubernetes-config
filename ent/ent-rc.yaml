@@ -1,0 +1,31 @@
+apiVersion: v1beta3
+kind: ReplicationController
+metadata:
+  name: ent-v1
+  labels: &labels
+    app: ent
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      containers:
+        - image: ent
+          name: ent
+          volumeMounts:
+            - mountPath: /data
+              name: data
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              port: 80
+      volumes:
+        - name: data
+          hostPath: 
+            path: /srv/kubernetes/data/ent
