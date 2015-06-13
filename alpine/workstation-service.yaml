@@ -1,0 +1,11 @@
+apiVersion: v1beta3
+kind: Service
+metadata:
+  name: alpine
+spec:
+  selector:
+    app: alpine
+  ports:
+  - name: ssh
+    port: 22
+    protocol: TCP

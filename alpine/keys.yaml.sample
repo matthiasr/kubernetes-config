@@ -1,0 +1,9 @@
+kind: Secret
+apiVersion: v1beta3
+metadata:
+  name: workstation-ssh-host-keys
+data:
+# `uuencode -m` each of these, then join all the lines.
+  rsa: "…"
+  ecdsa: "…"
+  dss: "…"
