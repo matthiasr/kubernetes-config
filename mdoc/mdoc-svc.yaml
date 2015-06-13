@@ -1,0 +1,10 @@
+apiVersion: v1beta3
+kind: Service
+metadata:
+  name: mdoc
+spec:
+  selector:
+    app: mdoc
+  ports:
+  - name: http
+    port: 80

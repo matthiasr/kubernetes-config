@@ -1,0 +1,24 @@
+apiVersion: v1beta3
+kind: ReplicationController
+metadata:
+  name: mdoc-v1
+  labels: &labels
+    app: mdoc
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      containers:
+        - name: mdoc
+          image: matthiasr/mdoc
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              port: 80
