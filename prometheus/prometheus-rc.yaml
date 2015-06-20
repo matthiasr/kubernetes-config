@@ -1,10 +1,10 @@
 apiVersion: v1beta3
 kind: ReplicationController
 metadata:
-  name: prometheus-v1
+  name: prometheus-v2
   labels: &labels
     app: prometheus
-    version: v1
+    version: v2
 spec:
   replicas: 1
   selector:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: matthiasr/prometheus
+          image: matthiasr/prometheus:glibc
           volumeMounts:
           - name: prometheus-storage
             mountPath: /prometheus
