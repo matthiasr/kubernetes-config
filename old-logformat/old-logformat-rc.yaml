@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: old-logformat-v1
+  labels: &labels
+    app: old-logformat
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      containers:
+      - image: matthiasr/logformat-irssi
+        name: irssi
+        volumeMounts:
+        - name: irc-logs
+          mountPath: /srv/irc/logs
+      - image: matthiasr/logformat:legacy
+        name: web
+        volumeMounts:
+        - name: irc-logs
+          mountPath: /srv/irc/logs
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            port: 8080
+      volumes:
+      - name: irc-logs
+        hostPath:
+          path: /srv/kubernetes/data/logformat/logs
