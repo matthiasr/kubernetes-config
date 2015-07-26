@@ -50,7 +50,7 @@ current-context: service-account-context
 EOF
   local -r kubeconfig_base64=$(echo "${kubeconfig}" | base64 -w0)
   read -r -d '' secretyaml <<EOF
-apiVersion: v1beta3
+apiVersion: v1
 data:
   kubeconfig: ${kubeconfig_base64}
 kind: Secret
