@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: matthiasr/prometheus:glibc
+          image: matthiasr/prometheus:latest
           volumeMounts:
           - name: prometheus-storage
             mountPath: /prometheus
@@ -26,11 +26,11 @@ spec:
             httpGet:
               port: 9090
         - name: kubectl
-          image: gcr.io/google_containers/kubectl
+          image: matthiasr/kubectl:1.0.1
           args:
             - proxy
             - -p
-            - 8001
+            - "8001"
             - --api-prefix=/
       volumes:
         - name: prometheus-storage
