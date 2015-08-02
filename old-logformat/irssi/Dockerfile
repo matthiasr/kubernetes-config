@@ -1,6 +1,7 @@
 FROM debian:jessie
 
 RUN echo 'en_US UTF-8' >> /etc/locale.gen && apt-get update && apt-get install -y irssi screen locales && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN echo "Europe/Berlin" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
 VOLUME /srv/irc/logs/
 WORKDIR /srv/irc/
