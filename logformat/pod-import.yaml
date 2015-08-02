@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logformat-import-v1
+  labels: &labels
+    app: logformat
+    proc: import
+    version: v1
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - image: matthiasr/logformat:latest
+    name: import
+    volumeMounts:
+    - name: irc-logs
+      mountPath: /srv/irc/logs
+    command:
+    - bin/run
+    - import.rb
+    - /srv/irc/logs
+    env:
+    - name: DB
+      value: postgres://logformat:changeme@postgres.default.svc.k.2pktfkt.net:5432/postgres?sslmode=disable&encoding=utf-8
+  volumes:
+    - name: irc-logs
+      hostPath:
+        path: /srv/kubernetes/data/logformat/logs
