@@ -1,0 +1,7 @@
+#!/bin/sh
+
+exec 2>&1
+
+. /srv/kubernetes/etc/base.conf
+
+exec "${BASE}/bin/kube-controller-manager" --logtostderr --service-account-private-key-file="${SERVER_KEY}" --root-ca-file="${CA_CRT}" --kubeconfig="${KUBECFG}"

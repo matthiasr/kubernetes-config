@@ -1,0 +1,7 @@
+#!/bin/sh
+
+exec 2>&1
+
+. /srv/kubernetes/etc/base.conf
+
+exec "${BASE}/bin/kubelet" --logtostderr --cluster_dns="${DNS_IP}" --cluster_domain="${DNS_DOMAIN}" --api-servers="https://144.76.60.131:6443" --kubeconfig="${KUBECFG}"

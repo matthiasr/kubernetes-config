@@ -1,0 +1,7 @@
+#!/bin/sh
+
+exec 2>&1
+
+. /srv/kubernetes/etc/base.conf
+
+exec "${BASE}/bin/kube-apiserver" --logtostderr --service-cluster-ip-range="${SERVICE_CLUSTER_IP_RANGE}" --insecure-port=4002 --etcd-servers="${ETCD_URL}" --admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota --client-ca-file="${CA_CRT}" --tls-cert-file="${SERVER_CRT}" --tls-private-key-file="${SERVER_KEY}"
