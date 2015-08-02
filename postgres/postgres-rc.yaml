@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: postgres-v1
+  labels: &labels
+    app: postgres
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      containers:
+      - image: postgres:9.4
+        name: pg
+        volumeMounts:
+        - name: pg-data
+          mountPath: /var/lib/postgresql/data
+        - name: pg-init
+          mountPath: /docker-entrypoint-initdb.d
+        env:
+        - name: POSTGRES_PASSWORD
+          value: changeme
+        ports:
+        - containerPort: 5432
+        livenessProbe:
+          initialDelaySeconds: 30
+          exec:
+            command:
+            - gosu
+            - postgres
+            - psql
+            - -c
+            - SELECT 1;
+      volumes:
+      - name: pg-data
+        hostPath:
+          path: /srv/kubernetes/data/postgresql/data
+      - name: pg-init
+        secret:
+          secretName: postgres-init
