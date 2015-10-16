@@ -1,0 +1,15 @@
+/var/lib/docker/containers/*/*.log {
+  rotate 8
+  weekly
+  compress
+  delaycompress
+  copytruncate
+}
+
+/var/log/docker.log {
+  rotate 7
+  daily
+  compress
+  delaycompress
+  copytruncate
+}
